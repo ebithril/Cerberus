@@ -7,7 +7,7 @@ LDFLAGS = $(LIBRARYPATHS) $(LIBRARIES)
 
 VPATH = Engine Utils
 
-OBJS = main.o engine.o window.o sdlwindow.o vulkanloader.o vulkaninstance.o vulkanengine.o
+OBJS = main.o engine.o window.o sdlwindow.o vulkanloader.o vulkaninstance.o vulkanengine.o vulkandevice.o
 
 REBUILDABLES = $(OBJS) $(TARGETNAME)
 

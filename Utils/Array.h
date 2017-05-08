@@ -50,6 +50,12 @@ public:
 		delete[] OldData;
 	}
 
+	void InitEmpty(const SizeType NewSize)
+	{
+		Resize(NewSize);
+		myNumberOfElemments = NewSize;
+	}
+
 	Type* Data()
 	{
 		return myData;

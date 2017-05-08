@@ -7,9 +7,12 @@
 
 void VulkanInstance::Create()
 {
+	bEnableValidationLayers = false;
+
 	LoadBaseFunctions();
-	CreateInstance();
 	CheckValidationLayerSupport();
+
+	CreateInstance();
 }
 
 void VulkanInstance::LoadBaseFunctions()
@@ -33,14 +36,12 @@ void VulkanInstance::CreateInstance()
     createInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
     createInfo.pApplicationInfo = &appInfo;
 
-    const int8* extensionNames = "";
+   	createInfo.enabledExtensionCount = 0;
+   	createInfo.ppEnabledExtensionNames = NULL;
 
-    createInfo.enabledExtensionCount = 0;
-    createInfo.ppEnabledExtensionNames = &extensionNames;
     createInfo.enabledLayerCount = 0;
 
-    VkInstance Instance{VK_NULL_HANDLE};
-    VkResult result = fpvkCreateInstance(&createInfo, nullptr, &Instance);
+    VkResult result = fpvkCreateInstance(&createInfo, nullptr, &VulkanInstance);
 
 	if (result != VK_SUCCESS)
 	{
@@ -50,14 +51,20 @@ void VulkanInstance::CreateInstance()
 
 void VulkanInstance::CheckValidationLayerSupport()
 {
+	if (!bEnableValidationLayers)
+	{
+		return;
+	}
+
 	uint32 layerCount;
 	fpvkEnumerateInstanceLayerProperties(&layerCount, NULL);
 
-	AvailableValidationLayers.Resize(layerCount);
+	AvailableValidationLayers.InitEmpty(layerCount);
 	fpvkEnumerateInstanceLayerProperties(&layerCount, AvailableValidationLayers.Data());
 
 	for (VkLayerProperties& layer : AvailableValidationLayers)
 	{
-		printf("%s", layer.layerName);
+		printf("Name: %s\n", layer.layerName);
+		printf("Description: %s\n\n", layer.description);
 	}
 }

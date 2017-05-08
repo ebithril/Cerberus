@@ -2,6 +2,7 @@
 
 #include "VulkanInstance.h"
 #include "VulkanLoader.h"
+#include "VulkanDevice.h"
 
 #include <windows.h>
 
@@ -15,4 +16,16 @@ void VulkanEngine::InitVulkan()
 		myInstance->Create();
 	}
 
+	myLoader = new VulkanLoader();
+	if (myLoader)
+	{
+		myLoader->Init(myInstance);
+		myLoader->LoadFunctions();
+	}
+
+	myDevice = new VulkanDevice();
+	if (myDevice)
+	{
+		myDevice->Init(myInstance, myLoader);
+	}
 }
