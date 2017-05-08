@@ -56,8 +56,8 @@ void VulkanInstance::CheckValidationLayerSupport()
 	AvailableValidationLayers.Resize(layerCount);
 	fpvkEnumerateInstanceLayerProperties(&layerCount, AvailableValidationLayers.Data());
 
-	for ()
+	for (VkLayerProperties& layer : AvailableValidationLayers)
 	{
-		/* code */
+		printf("%s", layer.layerName);
 	}
 }

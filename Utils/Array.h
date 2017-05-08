@@ -12,8 +12,8 @@ public:
 	typedef const Type* const_iterator;
 	iterator begin() { return &myData[0]; }
 	const_iterator begin() const { return &myData[0]; }
-	iterator end() { return &myData[myCurNrOfItems]; }
-	const_iterator end() const { return &myData[myCurNrOfItems]; }
+	iterator end() { return &myData[myNumberOfElemments]; }
+	const_iterator end() const { return &myData[myNumberOfElemments]; }
 
 	Array()
 		: myMax(0)
