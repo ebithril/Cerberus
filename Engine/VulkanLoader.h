@@ -17,6 +17,9 @@ public:
 	static PFN_vkGetInstanceProcAddr vkGetProcAddress;
 
 	DEFINE_VKFUNCTIONPTR(vkEnumeratePhysicalDevices);
+	DEFINE_VKFUNCTIONPTR(vkGetPhysicalDeviceProperties);
+	DEFINE_VKFUNCTIONPTR(vkGetPhysicalDeviceFeatures);
+	DEFINE_VKFUNCTIONPTR(vkGetPhysicalDeviceQueueFamilyProperties);
 
 private:
 	VulkanInstance* myInstance;

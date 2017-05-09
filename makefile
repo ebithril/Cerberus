@@ -16,10 +16,11 @@ all:
 	echo Compile done
 
 $(TARGETNAME): $(OBJS)
-	$(COMPILER) $(COMPILER_OPTIONS) -o $@ $^ $(LDFLAGS)
+	cd intermediate && \
+	$(COMPILER) $(COMPILER_OPTIONS) -o ../$@ $^ $(LDFLAGS)
 
 %.o: %.cpp
-	$(COMPILER) $(COMPILER_OPTIONS) -o $@ -c $<
+	$(COMPILER) $(COMPILER_OPTIONS) -o intermediate/$@ -c $<
 
 clean:
 	del /s $(REBUILDABLES) $(OBJS:.o=.dep)

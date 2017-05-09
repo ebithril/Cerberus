@@ -19,4 +19,7 @@ void VulkanLoader::LoadFunctions()
 	}
 
 	LOAD_VULKAN_FUNCTION(myInstance->VulkanInstance, vkEnumeratePhysicalDevices);
+	LOAD_VULKAN_FUNCTION(myInstance->VulkanInstance, vkGetPhysicalDeviceProperties);
+	LOAD_VULKAN_FUNCTION(myInstance->VulkanInstance, vkGetPhysicalDeviceFeatures);
+	LOAD_VULKAN_FUNCTION(myInstance->VulkanInstance, vkGetPhysicalDeviceQueueFamilyProperties);
 }
