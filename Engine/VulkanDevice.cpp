@@ -13,6 +13,8 @@ void VulkanDevice::Init(VulkanInstance* Instance, VulkanLoader* Loader)
 	Array<VkPhysicalDevice> Devices;
 	GetDevices(Devices);
 	ChooseSuitableDevice(Devices);
+
+	CreateDevice();
 }
 
 void VulkanDevice::GetDevices(Array<VkPhysicalDevice>& Devices)
@@ -31,7 +33,7 @@ void VulkanDevice::ChooseSuitableDevice(Array<VkPhysicalDevice>& Devices)
 	{
 		if (IsDeviceSuitable(PotentialDevice, myDeviceProperties, myDeviceFeatures))
 		{
-			myDevice = PotentialDevice;
+			myPhysicalDevice = PotentialDevice;
 			printf("Chose device with name: %s\n", myDeviceProperties.deviceName);
 			return;
 		}
@@ -48,6 +50,7 @@ bool VulkanDevice::IsDeviceSuitable(VkPhysicalDevice Device, VkPhysicalDevicePro
     if (DeviceProperties.deviceType == VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU && DeviceFeatures.geometryShader)
     {
     	QueueFamilyIndices Indices = FindQueueFamilies(Device);
+    	FamilyIndicies = Indices;
     	return Indices.IsComplete();
     }
 
@@ -78,4 +81,32 @@ QueueFamilyIndices VulkanDevice::FindQueueFamilies(VkPhysicalDevice Device)
 	}
 
 	return Indices;
+}
+
+void VulkanDevice::CreateDevice()
+{
+	VkDeviceQueueCreateInfo QueueCreateInfo = {};
+	QueueCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
+	QueueCreateInfo.queueFamilyIndex = FamilyIndicies.GraphicsFamily;
+	QueueCreateInfo.queueCount = 1;
+
+	float QueuePriority = 1.0f;
+	QueueCreateInfo.pQueuePriorities = &QueuePriority;
+
+	VkDeviceCreateInfo CreateInfo = {};
+	CreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
+	CreateInfo.pQueueCreateInfos = &QueueCreateInfo;
+	CreateInfo.queueCreateInfoCount = 1;
+	CreateInfo.pEnabledFeatures = &myDeviceFeatures;
+	CreateInfo.enabledExtensionCount = 0;
+	CreateInfo.enabledLayerCount = 0;
+
+	VkResult result = myLoader->fpvkCreateDevice(myPhysicalDevice, &CreateInfo, NULL, &myDevice);
+	if (result != VK_SUCCESS)
+	{
+		printf("Failed to create device");
+		return;
+	}
+
+	myLoader->fpvkGetDeviceQueue(myDevice, FamilyIndicies.GraphicsFamily, 0, &myGraphicsQueue);
 }

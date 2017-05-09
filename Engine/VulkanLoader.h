@@ -20,6 +20,8 @@ public:
 	DEFINE_VKFUNCTIONPTR(vkGetPhysicalDeviceProperties);
 	DEFINE_VKFUNCTIONPTR(vkGetPhysicalDeviceFeatures);
 	DEFINE_VKFUNCTIONPTR(vkGetPhysicalDeviceQueueFamilyProperties);
+	DEFINE_VKFUNCTIONPTR(vkCreateDevice);
+	DEFINE_VKFUNCTIONPTR(vkGetDeviceQueue);
 
 private:
 	VulkanInstance* myInstance;

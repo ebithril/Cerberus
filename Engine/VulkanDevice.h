@@ -25,14 +25,19 @@ private:
 	void GetDevices(Array<VkPhysicalDevice>& Devices);
 	void ChooseSuitableDevice(Array<VkPhysicalDevice>& Devices);
 	bool IsDeviceSuitable(VkPhysicalDevice Device, VkPhysicalDeviceProperties& DeviceProperties, VkPhysicalDeviceFeatures& DeviceFeatures);
+	void CreateDevice();
 
 	QueueFamilyIndices FindQueueFamilies(VkPhysicalDevice Device);
 
 	VulkanInstance* myInstance;
 	VulkanLoader* myLoader;
 
-	VkPhysicalDevice myDevice;
+	VkPhysicalDevice myPhysicalDevice;
 	VkPhysicalDeviceProperties myDeviceProperties;
 	VkPhysicalDeviceFeatures myDeviceFeatures;
 
+	QueueFamilyIndices FamilyIndicies;
+
+	VkDevice myDevice;
+	VkQueue myGraphicsQueue;
 };
