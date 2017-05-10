@@ -56,15 +56,15 @@ void VulkanInstance::CheckValidationLayerSupport()
 		return;
 	}
 
-	uint32 layerCount;
-	fpvkEnumerateInstanceLayerProperties(&layerCount, NULL);
+	uint32 LayerCount;
+	fpvkEnumerateInstanceLayerProperties(&LayerCount, NULL);
 
-	AvailableValidationLayers.InitEmpty(layerCount);
-	fpvkEnumerateInstanceLayerProperties(&layerCount, AvailableValidationLayers.Data());
+	AvailableValidationLayers.InitEmpty(LayerCount);
+	fpvkEnumerateInstanceLayerProperties(&LayerCount, AvailableValidationLayers.Data());
 
-	for (VkLayerProperties& layer : AvailableValidationLayers)
+	for (VkLayerProperties& Layer : AvailableValidationLayers)
 	{
-		printf("Name: %s\n", layer.layerName);
-		printf("Description: %s\n\n", layer.description);
+		printf("Name: %s\n", Layer.layerName);
+		printf("Description: %s\n\n", Layer.description);
 	}
 }
