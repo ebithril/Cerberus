@@ -28,15 +28,19 @@ public:
 		Resize(InitSize);	
 	}
 
+	SizeType Num()
+	{
+		return myNumberOfElemments;
+	}
+
 	void Add(const Type& NewItem)
 	{
-		myNumberOfElemments++;
 		if (myNumberOfElemments >= myMax)
 		{
 			Grow();
 		}
 
-		myData[myNumberOfElemments] = NewItem;
+		myData[myNumberOfElemments++] = NewItem;
 	}
 
 	void Resize(const SizeType NewSize)
@@ -44,7 +48,10 @@ public:
 		Type* OldData = myData;
 		myData = new Type[NewSize];
 
-		memcpy(myData, OldData, sizeof(Type) * myNumberOfElemments),
+		if (OldData && myNumberOfElemments)
+		{
+			memcpy(myData, OldData, sizeof(Type) * myNumberOfElemments);
+		}
 		myMax = NewSize;
 
 		delete[] OldData;

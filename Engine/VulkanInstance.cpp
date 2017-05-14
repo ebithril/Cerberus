@@ -36,8 +36,12 @@ void VulkanInstance::CreateInstance()
     createInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
     createInfo.pApplicationInfo = &appInfo;
 
-   	createInfo.enabledExtensionCount = 0;
-   	createInfo.ppEnabledExtensionNames = NULL;
+   	Array<const int8*> Extensions;
+   	Extensions.Add("VK_KHR_surface");
+   	Extensions.Add("VK_KHR_win32_surface");
+   	
+   	createInfo.enabledExtensionCount = Extensions.Num();
+   	createInfo.ppEnabledExtensionNames = Extensions.Data();
 
     createInfo.enabledLayerCount = 0;
 

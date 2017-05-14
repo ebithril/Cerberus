@@ -1,13 +1,13 @@
-LIBRARYPATHS = -Llibraries -LC:/VulkanSDK/1.0.46.0/Lib
-LIBRARIES = -lvulkan-1 -lSDL2main -lSDL2
-COMPILER_OPTIONS = -Wall -g -std=c++11
-COMPILER = x86_64-w64-mingw32-c++
-TARGETNAME = cerberus.exe
-LDFLAGS = $(LIBRARYPATHS) $(LIBRARIES)
+LIBRARYPATHS=-Llibraries -LC:/VulkanSDK/1.0.46.0/Lib
+LIBRARIES=-lvulkan-1 -lSDL2main -lSDL2
+COMPILER_OPTIONS=-Wall -g -std=c++11
+COMPILER=x86_64-w64-mingw32-c++
+TARGETNAME=cerberus.exe
+LDFLAGS=$(LIBRARYPATHS) $(LIBRARIES)
 
-VPATH = Engine Utils
+VPATH=Engine Utils
 
-OBJS = main.o engine.o window.o sdlwindow.o vulkanloader.o vulkaninstance.o vulkanengine.o vulkandevice.o
+OBJS=main.o engine.o window.o sdlwindow.o vulkanloader.o vulkaninstance.o vulkanengine.o vulkandevice.o
 
 REBUILDABLES = $(OBJS) $(TARGETNAME)
 
@@ -16,11 +16,10 @@ all:
 	echo Compile done
 
 $(TARGETNAME): $(OBJS)
-	cd intermediate && \
-	$(COMPILER) $(COMPILER_OPTIONS) -o ../$@ $^ $(LDFLAGS)
+	$(COMPILER) $(COMPILER_OPTIONS) -o $@ $^ $(LDFLAGS)
 
 %.o: %.cpp
-	$(COMPILER) $(COMPILER_OPTIONS) -o intermediate/$@ -c $<
+	$(COMPILER) $(COMPILER_OPTIONS) -o $@ -c $<
 
 clean:
 	del /s $(REBUILDABLES) $(OBJS:.o=.dep)

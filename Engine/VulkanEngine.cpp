@@ -1,12 +1,14 @@
 #include "VulkanEngine.h"
 
+#include <windows.h>
+
+#include "Window.h"
 #include "VulkanInstance.h"
 #include "VulkanLoader.h"
 #include "VulkanDevice.h"
 
-#include <windows.h>
 
-void VulkanEngine::InitVulkan()
+void VulkanEngine::InitVulkan(const EngineStartupOptions& StartUpOptions)
 {
 	VulkanLoader::vkGetProcAddress = (PFN_vkGetInstanceProcAddr)GetProcAddress(LoadLibrary("vulkan-1.dll"), "vkGetInstanceProcAddr");
 
@@ -23,9 +25,15 @@ void VulkanEngine::InitVulkan()
 		myLoader->LoadFunctions();
 	}
 
+	myWindow = new Window();
+	if (myWindow)
+	{
+		myWindow->CreateWindow(StartUpOptions.myWindowMode, StartUpOptions.myWindowWidth, StartUpOptions.myWindowHeight, myInstance, myLoader);
+	}
+
 	myDevice = new VulkanDevice();
 	if (myDevice)
 	{
-		myDevice->Init(myInstance, myLoader);
+		myDevice->Init(myInstance, myLoader, myWindow->GetSDLWindow());
 	}
 }

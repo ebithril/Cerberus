@@ -1,14 +1,17 @@
 #include "VulkanDevice.h"
 
+#include "SDLWindow.h"
 #include "VulkanLoader.h"
 #include "VulkanInstance.h"
 
 #include <stdio.h>
 
-void VulkanDevice::Init(VulkanInstance* Instance, VulkanLoader* Loader)
+void VulkanDevice::Init(VulkanInstance* Instance, VulkanLoader* Loader, SDLWindow& Window)
 {
 	myInstance = Instance;
 	myLoader = Loader;
+
+	mySurface = Window.GetSurface();
 
 	Array<VkPhysicalDevice> Devices;
 	GetDevices(Devices);
@@ -61,7 +64,7 @@ QueueFamilyIndices VulkanDevice::FindQueueFamilies(VkPhysicalDevice Device)
 {
 	QueueFamilyIndices Indices;
 
-	uint32_t QueueFamilyCount = 0;
+	uint32 QueueFamilyCount = 0;
 	myLoader->fpvkGetPhysicalDeviceQueueFamilyProperties(Device, &QueueFamilyCount, nullptr);
 
 	Array<VkQueueFamilyProperties> QueueFamilies;
@@ -71,9 +74,13 @@ QueueFamilyIndices VulkanDevice::FindQueueFamilies(VkPhysicalDevice Device)
 	int i = 0;
 	for (const auto& QueueFamily : QueueFamilies)
 	{
-		if (QueueFamily.queueCount > 0 && QueueFamily.queueFlags & VK_QUEUE_GRAPHICS_BIT) 
+		VkBool32 PresentSupport = false;
+		myLoader->fpvkGetPhysicalDeviceSurfaceSupportKHR(Device, i, mySurface, &PresentSupport);
+
+		if (QueueFamily.queueCount > 0 && QueueFamily.queueFlags & VK_QUEUE_GRAPHICS_BIT && PresentSupport) 
 		{
 			Indices.GraphicsFamily = i;
+			Indices.PresentFamily = i;
 			break;
 		}
 
@@ -98,8 +105,13 @@ void VulkanDevice::CreateDevice()
 	CreateInfo.pQueueCreateInfos = &QueueCreateInfo;
 	CreateInfo.queueCreateInfoCount = 1;
 	CreateInfo.pEnabledFeatures = &myDeviceFeatures;
-	CreateInfo.enabledExtensionCount = 0;
 	CreateInfo.enabledLayerCount = 0;
+
+	Array<const int8*> DeviceExtensions;
+	DeviceExtensions.Add(VK_KHR_SWAPCHAIN_EXTENSION_NAME);
+
+	CreateInfo.enabledExtensionCount = DeviceExtensions.Num();
+	CreateInfo.ppEnabledExtensionNames = DeviceExtensions.Data();
 
 	VkResult result = myLoader->fpvkCreateDevice(myPhysicalDevice, &CreateInfo, NULL, &myDevice);
 	if (result != VK_SUCCESS)

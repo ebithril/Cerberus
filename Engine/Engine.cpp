@@ -1,25 +1,16 @@
 #include "Engine.h"
 
-#include "Window.h"
 #include "VulkanEngine.h"
 
 #include "Include/SDL2/SDL.h"
-
 #include <stdio.h>
 
 void Engine::Init(const EngineStartupOptions& StartUpOptions)
 {
-	myWindow = new Window();
-
-	if (myWindow)
-	{
-		myWindow->CreateWindow(StartUpOptions.myWindowMode, StartUpOptions.myWindowWidth, StartUpOptions.myWindowHeight);
-	}
-
 	myEngine = new VulkanEngine();
 	if (myEngine)
 	{
-		myEngine->InitVulkan();
+		myEngine->InitVulkan(StartUpOptions);
 	}
 }
 
@@ -52,12 +43,6 @@ void Engine::Run()
 
 void Engine::ShutDown()
 {
-	if (myWindow)
-	{
-		myWindow->Close();
-		delete myWindow;
-	}
-
 	if (myEngine)
 	{
 		delete myEngine;

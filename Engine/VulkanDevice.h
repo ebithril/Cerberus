@@ -2,24 +2,26 @@
 
 class VulkanInstance;
 class VulkanLoader;
+class SDLWindow;
 
 #include "../utils/Array.h"
-#include "include/vulkan/vulkan.h"
+#include "VulkanInclude.h"
 
 struct QueueFamilyIndices
 {
-	int GraphicsFamily = -1;
+	int32 GraphicsFamily = -1;
+	int32 PresentFamily = -1;
 
 	bool IsComplete()
 	{
-		return GraphicsFamily >= 0;
+		return GraphicsFamily >= 0 && PresentFamily >= 0;
 	}
 };
 
 class VulkanDevice
 {
 public:
-	void Init(VulkanInstance* Instance, VulkanLoader* Loader);
+	void Init(VulkanInstance* Instance, VulkanLoader* Loader, SDLWindow& Window);
 
 private:
 	void GetDevices(Array<VkPhysicalDevice>& Devices);
@@ -40,4 +42,5 @@ private:
 
 	VkDevice myDevice;
 	VkQueue myGraphicsQueue;
+	VkSurfaceKHR mySurface;
 };

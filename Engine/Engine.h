@@ -2,7 +2,6 @@
 
 #include "EngineStructs.h"
 
-class Window;
 class VulkanEngine;
 
 class Engine
@@ -13,6 +12,5 @@ public:
 	void ShutDown();
 
 private:
-	Window* myWindow;
 	VulkanEngine* myEngine;
 };
