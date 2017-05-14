@@ -23,6 +23,9 @@ public:
 	DEFINE_VKFUNCTIONPTR(vkCreateDevice);
 	DEFINE_VKFUNCTIONPTR(vkGetDeviceQueue);
 	DEFINE_VKFUNCTIONPTR(vkGetPhysicalDeviceSurfaceSupportKHR);
+	DEFINE_VKFUNCTIONPTR(vkGetPhysicalDeviceSurfaceCapabilitiesKHR);
+	DEFINE_VKFUNCTIONPTR(vkGetPhysicalDeviceSurfaceFormatsKHR);
+	DEFINE_VKFUNCTIONPTR(vkGetPhysicalDeviceSurfacePresentModesKHR);
 
 private:
 	VulkanInstance* myInstance;

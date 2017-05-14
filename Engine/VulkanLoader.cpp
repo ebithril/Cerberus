@@ -25,4 +25,7 @@ void VulkanLoader::LoadFunctions()
 	LOAD_VULKAN_FUNCTION(myInstance->VulkanInstance, vkCreateDevice);
 	LOAD_VULKAN_FUNCTION(myInstance->VulkanInstance, vkGetDeviceQueue);
 	LOAD_VULKAN_FUNCTION(myInstance->VulkanInstance, vkGetPhysicalDeviceSurfaceSupportKHR);
+	LOAD_VULKAN_FUNCTION(myInstance->VulkanInstance, vkGetPhysicalDeviceSurfaceCapabilitiesKHR);
+	LOAD_VULKAN_FUNCTION(myInstance->VulkanInstance, vkGetPhysicalDeviceSurfaceFormatsKHR);
+	LOAD_VULKAN_FUNCTION(myInstance->VulkanInstance, vkGetPhysicalDeviceSurfacePresentModesKHR);
 }
