@@ -36,6 +36,7 @@ private:
 	bool IsDeviceSuitable(VkPhysicalDevice Device, VkPhysicalDeviceProperties& DeviceProperties, VkPhysicalDeviceFeatures& DeviceFeatures);
 	void CreateDevice();
 	void SetupSwapChain();
+	void SetupSwapChainImageViews();
 
 	VkSurfaceFormatKHR ChooseSwapSurfaceFormat(const Array<VkSurfaceFormatKHR>& AvailableFormats);
 	VkPresentModeKHR ChooseSwapPresentMode(const Array<VkPresentModeKHR>& AvailablePresentModes);
@@ -58,6 +59,7 @@ private:
 
 	VkSwapchainKHR mySwapChain;
 	Array<VkImage> mySwapChainImages;
+	Array<VkImageView> mySwapChainImageViews;
 
 	VkSurfaceFormatKHR mySurfaceFormat;
 	VkPresentModeKHR mySurfacePresentMode;

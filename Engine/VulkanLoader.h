@@ -28,6 +28,7 @@ public:
 	DEFINE_VKFUNCTIONPTR(vkGetPhysicalDeviceSurfacePresentModesKHR);
 	DEFINE_VKFUNCTIONPTR(vkCreateSwapchainKHR);
 	DEFINE_VKFUNCTIONPTR(vkGetSwapchainImagesKHR);
+	DEFINE_VKFUNCTIONPTR(vkCreateImageView);
 
 private:
 	VulkanInstance* myInstance;
