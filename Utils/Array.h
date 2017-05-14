@@ -28,7 +28,17 @@ public:
 		Resize(InitSize);	
 	}
 
-	SizeType Num()
+	Type& operator[](SizeType Index)
+	{
+		return myData[Index];
+	}
+
+	const Type& operator[](SizeType Index) const
+	{
+		return myData[Index];
+	}
+
+	SizeType Num() const
 	{
 		return myNumberOfElemments;
 	}

@@ -18,6 +18,13 @@ struct QueueFamilyIndices
 	}
 };
 
+struct SwapChainSupportDetails
+{
+	VkSurfaceCapabilitiesKHR Capabilities;
+	Array<VkSurfaceFormatKHR> Formats;
+	Array<VkPresentModeKHR> PresentModes;
+};
+
 class VulkanDevice
 {
 public:
@@ -28,6 +35,11 @@ private:
 	void ChooseSuitableDevice(Array<VkPhysicalDevice>& Devices);
 	bool IsDeviceSuitable(VkPhysicalDevice Device, VkPhysicalDeviceProperties& DeviceProperties, VkPhysicalDeviceFeatures& DeviceFeatures);
 	void CreateDevice();
+	void SetupSwapChain();
+
+	VkSurfaceFormatKHR ChooseSwapSurfaceFormat(const Array<VkSurfaceFormatKHR>& AvailableFormats);
+	VkPresentModeKHR ChooseSwapPresentMode(const Array<VkPresentModeKHR>& AvailablePresentModes);
+	VkExtent2D ChooseSwapExtent(const VkSurfaceCapabilitiesKHR& Capabilities);
 
 	QueueFamilyIndices FindQueueFamilies(VkPhysicalDevice Device);
 
@@ -43,4 +55,11 @@ private:
 	VkDevice myDevice;
 	VkQueue myGraphicsQueue;
 	VkSurfaceKHR mySurface;
+
+	VkSwapchainKHR mySwapChain;
+	Array<VkImage> mySwapChainImages;
+
+	VkSurfaceFormatKHR mySurfaceFormat;
+	VkPresentModeKHR mySurfacePresentMode;
+	VkExtent2D mySwapExtent;
 };

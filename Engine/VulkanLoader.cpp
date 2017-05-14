@@ -28,4 +28,6 @@ void VulkanLoader::LoadFunctions()
 	LOAD_VULKAN_FUNCTION(myInstance->VulkanInstance, vkGetPhysicalDeviceSurfaceCapabilitiesKHR);
 	LOAD_VULKAN_FUNCTION(myInstance->VulkanInstance, vkGetPhysicalDeviceSurfaceFormatsKHR);
 	LOAD_VULKAN_FUNCTION(myInstance->VulkanInstance, vkGetPhysicalDeviceSurfacePresentModesKHR);
+	LOAD_VULKAN_FUNCTION(myInstance->VulkanInstance, vkCreateSwapchainKHR);
+	LOAD_VULKAN_FUNCTION(myInstance->VulkanInstance, vkGetSwapchainImagesKHR);
 }

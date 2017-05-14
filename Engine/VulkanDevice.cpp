@@ -18,6 +18,7 @@ void VulkanDevice::Init(VulkanInstance* Instance, VulkanLoader* Loader, SDLWindo
 	ChooseSuitableDevice(Devices);
 
 	CreateDevice();
+	SetupSwapChain();
 }
 
 void VulkanDevice::GetDevices(Array<VkPhysicalDevice>& Devices)
@@ -121,4 +122,115 @@ void VulkanDevice::CreateDevice()
 	}
 
 	myLoader->fpvkGetDeviceQueue(myDevice, FamilyIndicies.GraphicsFamily, 0, &myGraphicsQueue);
+}
+
+void VulkanDevice::SetupSwapChain()
+{
+	SwapChainSupportDetails Details;
+
+	myLoader->fpvkGetPhysicalDeviceSurfaceCapabilitiesKHR(myPhysicalDevice, mySurface, &Details.Capabilities);
+
+	uint32 FormatCount;
+	myLoader->fpvkGetPhysicalDeviceSurfaceFormatsKHR(myPhysicalDevice, mySurface, &FormatCount, NULL);
+
+	if (FormatCount	<= 0)
+	{
+		printf("Something went wrong there are no format counts supported.\n");
+		return;
+	}
+
+	Details.Formats.InitEmpty(FormatCount);
+	myLoader->fpvkGetPhysicalDeviceSurfaceFormatsKHR(myPhysicalDevice, mySurface, &FormatCount, Details.Formats.Data());
+
+	uint32 PresentModeCount;
+	myLoader->fpvkGetPhysicalDeviceSurfacePresentModesKHR(myPhysicalDevice, mySurface, &PresentModeCount, NULL);
+
+	if (PresentModeCount <= 0)
+	{
+		printf("Something went wrong there are no Present modes supproted.\n");
+		return;
+	}
+
+	Details.PresentModes.InitEmpty(PresentModeCount);
+	myLoader->fpvkGetPhysicalDeviceSurfacePresentModesKHR(myPhysicalDevice, mySurface, &PresentModeCount, Details.PresentModes.Data());
+
+	mySurfaceFormat = ChooseSwapSurfaceFormat(Details.Formats);
+	mySurfacePresentMode = ChooseSwapPresentMode(Details.PresentModes);
+	mySwapExtent = ChooseSwapExtent(Details.Capabilities);
+
+	uint32 ImageCount = Details.Capabilities.minImageCount + 1;
+	if (Details.Capabilities.maxImageCount > 0 && ImageCount > Details.Capabilities.maxImageCount)
+	{
+		ImageCount = Details.Capabilities.maxImageCount;
+	}
+
+	VkSwapchainCreateInfoKHR CreateInfo = {};
+	CreateInfo.sType = VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR;
+	CreateInfo.surface = mySurface;
+	CreateInfo.minImageCount = ImageCount;
+	CreateInfo.imageFormat = mySurfaceFormat.format;
+	CreateInfo.imageColorSpace = mySurfaceFormat.colorSpace;
+	CreateInfo.imageExtent = mySwapExtent;
+	CreateInfo.imageArrayLayers = 1;
+	CreateInfo.imageUsage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
+	CreateInfo.imageSharingMode = VK_SHARING_MODE_EXCLUSIVE;
+    CreateInfo.queueFamilyIndexCount = 0; // Optional
+    CreateInfo.pQueueFamilyIndices = nullptr; // Optional
+    CreateInfo.preTransform = Details.Capabilities.currentTransform;
+    CreateInfo.compositeAlpha = VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR;
+    CreateInfo.presentMode = mySurfacePresentMode;
+	CreateInfo.clipped = VK_TRUE;
+	CreateInfo.oldSwapchain = VK_NULL_HANDLE;
+
+	if (myLoader->fpvkCreateSwapchainKHR(myDevice, &CreateInfo, NULL, &mySwapChain) != VK_SUCCESS)
+	{
+		printf("Failed to create swap chain.\n");
+		return;
+	}
+
+	myLoader->fpvkGetSwapchainImagesKHR(myDevice, mySwapChain, &ImageCount, NULL);
+	mySwapChainImages.InitEmpty(ImageCount);
+	myLoader->fpvkGetSwapchainImagesKHR(myDevice, mySwapChain, &ImageCount, mySwapChainImages.Data());
+}
+
+VkSurfaceFormatKHR VulkanDevice::ChooseSwapSurfaceFormat(const Array<VkSurfaceFormatKHR>& AvailableFormats)
+{
+	if (AvailableFormats.Num() == 1 && AvailableFormats[0].format == VK_FORMAT_UNDEFINED)
+	{
+		return {VK_FORMAT_B8G8R8A8_UNORM, VK_COLOR_SPACE_SRGB_NONLINEAR_KHR};
+	}
+
+	for (const VkSurfaceFormatKHR& AvailableFormat : AvailableFormats)
+	{
+		if (AvailableFormat.format == VK_FORMAT_B8G8R8A8_UNORM && AvailableFormat.colorSpace == VK_COLOR_SPACE_SRGB_NONLINEAR_KHR)
+		{
+			return AvailableFormat;
+		}
+	}
+
+	return AvailableFormats[0];
+}
+
+VkPresentModeKHR VulkanDevice::ChooseSwapPresentMode(const Array<VkPresentModeKHR>& AvailablePresentModes)
+{
+	VkPresentModeKHR BestMode = VK_PRESENT_MODE_FIFO_KHR;
+
+	for (const VkPresentModeKHR& AvailablePresentMode : AvailablePresentModes)
+	{
+		if (AvailablePresentMode == VK_PRESENT_MODE_MAILBOX_KHR)
+		{
+			return VK_PRESENT_MODE_MAILBOX_KHR;
+		}
+		else if (AvailablePresentMode == VK_PRESENT_MODE_IMMEDIATE_KHR)
+		{
+			BestMode = AvailablePresentMode;
+		}
+	}
+
+	return BestMode;
+}
+
+VkExtent2D VulkanDevice::ChooseSwapExtent(const VkSurfaceCapabilitiesKHR& Capabilities)
+{
+	return Capabilities.currentExtent;
 }
