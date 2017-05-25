@@ -31,3 +31,5 @@
 *.dep
 *.sublime-project
 *.sublime-workspace
+
+build/*

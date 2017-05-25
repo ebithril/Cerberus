@@ -2,8 +2,8 @@
 
 #include "EngineStructs.h"
 
-#include "Include/SDL2/SDL.h"
-#include "Include/SDL2/SDL_syswm.h"
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_syswm.h>
 
 #include "VulkanInclude.h"
 

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "VulkanLoader.h"
-#include "../Utils/Array.h"
+#include <Array.h>
 
 class VulkanInstance
 {

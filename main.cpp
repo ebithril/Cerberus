@@ -1,12 +1,12 @@
-#include "Engine/Engine.h"
+#include <Engine.h>
 
 #include <stdio.h>
 
 int main()
 {
 	EngineStartupOptions StartUpOptions;
-	StartUpOptions.myWindowWidth = 640;
-	StartUpOptions.myWindowHeight = 480;
+	StartUpOptions.myWindowWidth = 1280;
+	StartUpOptions.myWindowHeight = 720;
 
 	Engine myEngine;
 

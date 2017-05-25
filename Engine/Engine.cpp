@@ -2,7 +2,7 @@
 
 #include "VulkanEngine.h"
 
-#include "Include/SDL2/SDL.h"
+#include <SDL2/SDL.h>
 #include <stdio.h>
 
 void Engine::Init(const EngineStartupOptions& StartUpOptions)

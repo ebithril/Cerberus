@@ -4,7 +4,7 @@ class VulkanInstance;
 class VulkanLoader;
 class SDLWindow;
 
-#include "../utils/Array.h"
+#include <Array.h>
 #include "VulkanInclude.h"
 
 struct QueueFamilyIndices
