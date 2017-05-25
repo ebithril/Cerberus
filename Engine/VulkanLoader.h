@@ -29,6 +29,7 @@ public:
 	DEFINE_VKFUNCTIONPTR(vkCreateSwapchainKHR);
 	DEFINE_VKFUNCTIONPTR(vkGetSwapchainImagesKHR);
 	DEFINE_VKFUNCTIONPTR(vkCreateImageView);
+	DEFINE_VKFUNCTIONPTR(vkCreateWin32SurfaceKHR);
 
 private:
 	VulkanInstance* myInstance;

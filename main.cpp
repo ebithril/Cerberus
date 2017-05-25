@@ -7,6 +7,7 @@ int main()
 	EngineStartupOptions StartUpOptions;
 	StartUpOptions.myWindowWidth = 1280;
 	StartUpOptions.myWindowHeight = 720;
+	StartUpOptions.myWindowMode = WindowMode::Windowed;
 
 	Engine myEngine;
 
