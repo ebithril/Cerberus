@@ -19,6 +19,7 @@ void VulkanDevice::Init(VulkanInstance* Instance, VulkanLoader* Loader, SDLWindo
 
 	CreateDevice();
 	SetupSwapChain();
+	SetupSwapChainImageViews();
 }
 
 void VulkanDevice::GetDevices(Array<VkPhysicalDevice>& Devices)

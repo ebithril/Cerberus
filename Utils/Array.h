@@ -2,6 +2,7 @@
 
 #include "Types.h"
 
+#include "MemoryMacros.h"
 #include <memory.h>
 
 template<typename Type, typename SizeType=uint16>
@@ -26,6 +27,11 @@ public:
 		: Array()
 	{
 		Resize(InitSize);	
+	}
+
+	~Array()
+	{
+		delete[] myData;
 	}
 
 	Type& operator[](SizeType Index)
@@ -73,7 +79,7 @@ public:
 		myNumberOfElemments = NewSize;
 	}
 
-	Type* Data()
+	Type* Data() const
 	{
 		return myData;
 	}

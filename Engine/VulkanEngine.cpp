@@ -37,3 +37,26 @@ void VulkanEngine::InitVulkan(const EngineStartupOptions& StartUpOptions)
 		myDevice->Init(myInstance, myLoader, myWindow->GetSDLWindow());
 	}
 }
+
+void VulkanEngine::Shutdown()
+{
+	if (myInstance)
+	{
+		delete myInstance;
+	}
+
+	if (myLoader)
+	{
+		delete myLoader;
+	}
+
+	if (myWindow)
+	{
+		delete myWindow;
+	}
+
+	if (myDevice)
+	{
+		delete myDevice;
+	}
+}

@@ -45,6 +45,7 @@ void Engine::ShutDown()
 {
 	if (myEngine)
 	{
+		myEngine->Shutdown();
 		delete myEngine;
 	}
 }

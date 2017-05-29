@@ -1,9 +1,12 @@
+#include <MemoryMacros.h>
 #include <Engine.h>
 
 #include <stdio.h>
 
 int main()
 {
+	MemoryTracker::Create();
+
 	EngineStartupOptions StartUpOptions;
 	StartUpOptions.myWindowWidth = 1280;
 	StartUpOptions.myWindowHeight = 720;
@@ -16,6 +19,8 @@ int main()
 	myEngine.Run();
 
 	myEngine.ShutDown();
+
+	MemoryTracker::Destroy();
 
 	return 0;
 }

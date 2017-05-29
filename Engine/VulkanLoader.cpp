@@ -32,4 +32,5 @@ void VulkanLoader::LoadFunctions()
 	LOAD_VULKAN_FUNCTION(myInstance->VulkanInstance, vkGetSwapchainImagesKHR);
 	LOAD_VULKAN_FUNCTION(myInstance->VulkanInstance, vkCreateImageView);
 	LOAD_VULKAN_FUNCTION(myInstance->VulkanInstance, vkCreateWin32SurfaceKHR);
+	LOAD_VULKAN_FUNCTION(myInstance->VulkanInstance, vkCreateShaderModule);
 }

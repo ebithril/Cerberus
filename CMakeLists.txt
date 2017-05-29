@@ -1,8 +1,9 @@
 cmake_minimum_required(VERSION 3.8)
 
-set(CMAKE_CXX_FLAGS "-Wall -std=c++11")
+set(CMAKE_CXX_FLAGS "-Wall -std=c++11 -g")
 
 add_subdirectory("Engine" "Engine")
+add_subdirectory("Utils" "Utils")
 
 link_directories($ENV{VK_SDK_PATH}/Lib)
 link_directories($ENV{SDL2_SDK_PATH}/x86_64-w64-mingw32/lib)
