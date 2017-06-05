@@ -52,6 +52,7 @@ void VulkanEngine::Shutdown()
 
 	if (myWindow)
 	{
+		myWindow->Close();
 		delete myWindow;
 	}
 

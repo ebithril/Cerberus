@@ -1,5 +1,6 @@
 #pragma once
 
+#include <MemoryMacros.h>
 #include <Types.h>
 
 enum class WindowMode : uint8
