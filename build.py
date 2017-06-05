@@ -19,7 +19,7 @@ def writeToCmakeFile(sourceFiles):
 	for file in sourceFiles:
 		cmakeSet += ' ' + file
 	
-	cmakeSet += ')'
+	cmakeSet += ')\n'
 
 	filePath = 'CMakeLists.txt'
 	fh, absPath = tempfile.mkstemp()
@@ -28,7 +28,6 @@ def writeToCmakeFile(sourceFiles):
 			for line in oldFile:
 				if 'set(SOURCE_FILES' in line:
 					newFile.write(cmakeSet)
-					newFile.write('\n')
 				else:
 					newFile.write(line)
 
