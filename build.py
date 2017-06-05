@@ -6,6 +6,8 @@ from subprocess import call
 
 subDirs = ['utils', 'engine']
 
+sourceFileLineStart = 'set(SOURCE_FILES'
+
 def build():
 	os.chdir('build')
 
@@ -14,7 +16,7 @@ def build():
 	os.chdir('..')
 
 def writeToCmakeFile(sourceFiles):
-	cmakeSet = 'set(SOURCE_FILES'
+	cmakeSet = sourceFileLineStart
 	
 	for file in sourceFiles:
 		cmakeSet += ' ' + file
@@ -26,7 +28,7 @@ def writeToCmakeFile(sourceFiles):
 	with open(absPath, 'w') as newFile:
 		with open(filePath) as oldFile:
 			for line in oldFile:
-				if 'set(SOURCE_FILES' in line:
+				if sourceFileLineStart in line:
 					newFile.write(cmakeSet)
 				else:
 					newFile.write(line)
