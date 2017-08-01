@@ -8,6 +8,12 @@ class String
 public:
 	String(const int8* aString);
 	String(const String& aString);
+	String(String&& aString);
+	~String();
+
+	const String& operator=(const int8* aString);
+	const String& operator=(const String& aString);
+
 	uint16 Length() { return myLength; }
 
 
@@ -18,3 +24,4 @@ private:
 	uint16 myLength = 0;
 	int8* myString = nullptr;
 };
+
