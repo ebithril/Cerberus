@@ -58,6 +58,7 @@ def parseSubdir(subDir):
 
         os.chdir(subDir)
         sourceFiles = glob.glob('*.cpp')
+        sourceFiles.extend(glob.glob('*.c'))
         
         writeToCmakeFile(sourceFiles)
 

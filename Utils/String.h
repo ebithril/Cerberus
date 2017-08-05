@@ -13,6 +13,8 @@ public:
 
 	const String& operator=(const int8* aString);
 	const String& operator=(const String& aString);
+	void operator+=(const String& aString);
+	void operator+=(const int8* aString);
 
 	uint16 Length() { return myLength; }
 
@@ -20,6 +22,7 @@ public:
 	const int8* CString() const { return myString; }
 private:
 	void Alloc(uint16 aLength);
+	uint16 CountCString(const int8* aString) const;
 
 	uint16 myLength = 0;
 	int8* myString = nullptr;
