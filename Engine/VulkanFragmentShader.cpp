@@ -8,4 +8,6 @@ void VulkanFragmentShader::LoadShader(const int8* ShaderFileName)
 	FILE* file = fopen(ShaderFileName, "r");
 
 	Array<uint32> Spirv = CompileGLSL(ShaderFileName, ShaderType::FragmentShader, Glsl);
+	fclose(file);
 }
+
