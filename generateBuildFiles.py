@@ -8,7 +8,7 @@ subDirs = ['utils', 'engine', 'thirdparty']
 sourceFileLineStart = 'set(SOURCE_FILES'
 
 
-debug = False 
+debug = False
 
 def writeToFile(file, line):
         if debug == True:
@@ -26,7 +26,7 @@ def writeToCmakeFile(sourceFiles):
 
         for file in sourceFiles:
                 cmakeSet += ' ' + file
-        
+
         cmakeSet += ')\n'
 
         filePath = 'CMakeLists.txt'
