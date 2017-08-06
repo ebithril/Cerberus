@@ -2,7 +2,6 @@ import glob
 import os
 import shutil
 import tempfile
-from subprocess import call
 
 subDirs = ['utils', 'engine', 'thirdparty']
 
