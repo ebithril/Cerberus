@@ -40,7 +40,7 @@ def writeToCmakeFile(sourceFiles):
                                         writeToFile(newFile, line)
 
         os.close(fh)
-        
+
         if debug == False:
                 os.remove(filePath)
                 shutil.move(absPath, filePath)

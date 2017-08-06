@@ -3,7 +3,8 @@
 #include "EngineStructs.h"
 
 #include <Array.h>
-#include <shaderc/shaderc.hpp>
+
+class String;
 
 enum class ShaderType : uint8
 {
@@ -14,12 +15,11 @@ enum class ShaderType : uint8
 class VulkanShader
 {
 public:	
-	virtual void LoadShader(const int8* ShaderFileName) = 0;
-	static shaderc_shader_kind GetKindFromType(ShaderType Type);
+	virtual void LoadShader(const String& ShaderFileName) = 0;
 
 	virtual void BindShader() = 0;
 
 protected:
-	Array<uint32> CompileGLSL(const int8* ShaderFileName, ShaderType Type, const Array<int8>& Data);
+	Array<uint32> CompileGLSL(const String& ShaderFileName, ShaderType Type, const Array<int8>& Data);
 
 };

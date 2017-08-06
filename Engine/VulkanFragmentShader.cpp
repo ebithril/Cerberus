@@ -1,13 +1,12 @@
 #include "VulkanFragmentShader.h"
 
-#include <stdio.h>
+#include <FileOperations.h>
 
-void VulkanFragmentShader::LoadShader(const int8* ShaderFileName)
+void VulkanFragmentShader::LoadShader(const String& ShaderFileName)
 {
 	Array<int8> Glsl;
-	FILE* file = fopen(ShaderFileName, "r");
+	ReadFileIntoArray(ShaderFileName, Glsl);
 
 	Array<uint32> Spirv = CompileGLSL(ShaderFileName, ShaderType::FragmentShader, Glsl);
-	fclose(file);
 }
 

@@ -5,7 +5,7 @@
 class VulkanFragmentShader : public VulkanShader
 {
 public:
-	virtual void LoadShader(const int8* ShaderFileName) override;
+	virtual void LoadShader(const String& ShaderFileName) override;
 
 private:
 

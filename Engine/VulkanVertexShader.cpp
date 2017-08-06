@@ -1,8 +1,11 @@
 #include "VulkanVertexShader.h"
 
-void VulkanVertexShader::LoadShader(const int8* ShaderFileName)
+#include <FileOperations.h>
+
+void VulkanVertexShader::LoadShader(const String& ShaderFileName)
 {
 	Array<int8> Glsl;
+	ReadFileIntoArray(ShaderFileName, Glsl);
 	Array<uint32> Spirv = CompileGLSL(ShaderFileName, ShaderType::VertexShader, Glsl);
 }
 
