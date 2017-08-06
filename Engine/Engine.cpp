@@ -7,6 +7,11 @@
 
 void Engine::Init(const EngineStartupOptions& StartUpOptions)
 {
+	if (myEngine)
+	{
+		printf("Initing engine a second time this is not allowed");
+		return;
+	}
 	myEngine = new VulkanEngine();
 	if (myEngine)
 	{
@@ -19,7 +24,7 @@ void Engine::Run()
 	const uint8* KeyboardState = SDL_GetKeyboardState(nullptr);
 	bool bShutdown = false;
 
-	while(!bShutdown)
+	while (!bShutdown)
 	{
 		SDL_PumpEvents();
 
@@ -30,7 +35,7 @@ void Engine::Run()
 		}
 
 		SDL_Event event;
-		while(SDL_PollEvent(&event))
+		while (SDL_PollEvent(&event))
 		{
 			if (event.type == SDL_WINDOWEVENT && event.window.event == SDL_WINDOWEVENT_CLOSE)
 			{

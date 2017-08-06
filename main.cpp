@@ -21,6 +21,5 @@ int main()
 	myEngine.ShutDown();
 
 	MemoryTracker::Destroy();
-
 	return 0;
 }

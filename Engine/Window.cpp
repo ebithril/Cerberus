@@ -4,6 +4,11 @@
 
 void Window::CreateWindow(const WindowMode aWindowMode, const uint16 aWindowWidth, const uint16 aWindowHeight, VulkanInstance* Instance, VulkanLoader* Loader)
 {
+	if (myWindow)
+	{
+		printf("Tried to create window a second time this is not allowed");
+		return;
+	}
 	myWindow = new SDLWindow();
 	if (myWindow)
 	{

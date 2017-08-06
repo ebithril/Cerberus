@@ -12,5 +12,5 @@ public:
 	void ShutDown();
 
 private:
-	VulkanEngine* myEngine;
+	VulkanEngine* myEngine = nullptr;
 };

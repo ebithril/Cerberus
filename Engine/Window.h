@@ -17,5 +17,5 @@ public:
 	SDLWindow& GetSDLWindow() { return *myWindow; }
 
 private:
-	SDLWindow* myWindow;
+	SDLWindow* myWindow = nullptr;
 };
