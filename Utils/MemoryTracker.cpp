@@ -44,7 +44,7 @@ void MemoryTracker::Destroy()
 	for (uint16 i = 0; i < ourInstance->NumberOfAllocations; ++i)
 	{
 		const MemoryData& Data = ourInstance->Allocations[i];
-		printf("Memory leak at Line:%d File:%s Function:%s Size:%d \n", Data.Line, Data.FileName, Data.FunctionName, Data.Bytes);
+		printf("Memory leak at Line:%d File:%s Function:%s Size:%u \n", Data.Line, Data.FileName, Data.FunctionName, Data.Bytes);
 	}
 
 	free(ourInstance);
