@@ -20,9 +20,6 @@ def writeToFile(file, line):
 def build():
         os.chdir('build')
 
-        if debug == False:
-            call('make -j30')
-
         os.chdir('..')
 
 def writeToCmakeFile(sourceFiles):
