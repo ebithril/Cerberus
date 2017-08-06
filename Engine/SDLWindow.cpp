@@ -55,3 +55,4 @@ void SDLWindow::Close()
 		printf("Closed window!");
 	}
 }
+

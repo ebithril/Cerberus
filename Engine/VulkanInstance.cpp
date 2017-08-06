@@ -72,3 +72,4 @@ void VulkanInstance::CheckValidationLayerSupport()
 		printf("Description: %s\n\n", Layer.description);
 	}
 }
+

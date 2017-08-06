@@ -52,7 +52,8 @@ void String::operator+=(const int8* aString)
 	const uint16 i = CountCString(aString);
 	Alloc((myLength + i) - 1);
 	memcpy(myString, oldString, myLength);
-	memcpy(myString + myLength, aString, i);
+	memcpy(myString + myLength, aString, i + 1);
+	delete[] oldString;
 }
 
 void String::Alloc(uint16 aLength)
@@ -63,7 +64,7 @@ void String::Alloc(uint16 aLength)
 uint16 String::CountCString(const int8* aString) const
 {
 	uint16 i = 0;
-	while(aString[i+1] != '\0')
+	while (aString[i+1] != '\0')
 	{
 		i++;
 	}
