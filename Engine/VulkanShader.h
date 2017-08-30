@@ -1,6 +1,7 @@
 #pragma once
 
 #include "EngineStructs.h"
+#include "Asset.h"
 
 #include <Array.h>
 
@@ -12,7 +13,7 @@ enum class ShaderType : uint8
 	FragmentShader
 };
 
-class VulkanShader
+class VulkanShader : public Asset
 {
 public:	
 	virtual void LoadShader(const String& ShaderFileName) = 0;

@@ -17,9 +17,9 @@ void VulkanInstance::Create()
 
 void VulkanInstance::LoadBaseFunctions()
 {
-	LOAD_VULKAN_FUNCTION(NULL, vkCreateInstance);
-	LOAD_VULKAN_FUNCTION(NULL, vkEnumerateInstanceLayerProperties);
-	LOAD_VULKAN_FUNCTION(NULL, vkEnumerateInstanceExtensionProperties);
+	LOAD_VULKAN_FUNCTION(vkCreateInstance);
+	LOAD_VULKAN_FUNCTION(vkEnumerateInstanceLayerProperties);
+	LOAD_VULKAN_FUNCTION(vkEnumerateInstanceExtensionProperties);
 }
 
 void VulkanInstance::CreateInstance()
@@ -45,7 +45,7 @@ void VulkanInstance::CreateInstance()
 
     createInfo.enabledLayerCount = 0;
 
-    VkResult result = fpvkCreateInstance(&createInfo, nullptr, &VulkanInstance);
+    VkResult result = fpvkCreateInstance(&createInfo, nullptr, &gVulkanInstance);
 
 	if (result != VK_SUCCESS)
 	{

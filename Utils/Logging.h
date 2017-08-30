@@ -1,11 +1,11 @@
 #include "MemoryMacros.h"
 
+#include <signal.h>
+
+class String;
+
 void PrintToLog(const String& Category, const String& msg, ...);
 
-#define LGO(LogCategory, msg, ...)
-#define ensure(statement) [] (bool completes) { static bool hasEnsured = false; \
-	if	(!completes && !hasEnsured)\
-	{\
-		hasEnsured = true;\
-	}\
-} \
+#define LOG(LogCategory)
+#define ensure(statement) (statement)
+

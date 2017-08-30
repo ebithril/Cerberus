@@ -14,9 +14,12 @@ public:
 	void Shutdown();
 	
 private:
+	bool LoadFunctions();
+
 	VulkanInstance* myInstance;
 	VulkanLoader* myLoader;
 	VulkanDevice* myDevice;
 
 	Window* myWindow;
 };
+
