@@ -34,5 +34,13 @@
 *.swp
 
 build/*
+obj/*
+bin/*
+
+*.make
+Makefile
+
+*.make
+Makefile
 
 TAGS
