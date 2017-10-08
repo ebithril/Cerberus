@@ -3,14 +3,16 @@ workspace "Cerberus"
 	filter "language:C++"
 		buildoptions "-std=c++11"
 
+targetdir "bin/%{cfg.buildcfg}"
+
 project "Cerberus"
 	kind "ConsoleApp"
 	language "C++"
-	targetdir "bin/%{cfg.buildcfg}"
 
 	files { "*.h", "*.c", "*.cpp" }
 	includedirs { "Utils", "Engine" }
-	links { "Engine", "Utils" }
+	libdirs { "$(VK_SDK_PATH)/Lib" }
+	links { "Engine", "Utils", "SDL2", "SDL2main" }
 
 	filter "configurations:Debug"
 		defines { "DEBUG" }
@@ -25,9 +27,7 @@ project "Engine"
 	language "C++"
 	
 	files { "Engine/**.h", "Engine/**.c", "Engine/**.cpp" }
-	includedirs { "Utils", "C:/VulkanSDK/1.0.46.0/Include" }
-	libdirs { os.findlib("Vulkan") }
-	links { "Utils" }
+	includedirs { "Utils", "$(VK_SDK_PATH)/Include" }
 	
 	filter "configurations:Debug"
 		defines { "DEBUG" }
