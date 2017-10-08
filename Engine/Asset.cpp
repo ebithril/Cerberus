@@ -1,7 +1,7 @@
 #include "Asset.h"
 
-Asset* AssetManager::Load(BaseAssetPtr* AssetPtr)
+/*Asset* AssetManager::Load(BaseAssetPtr* AssetPtr)
 {
 	
-}
+}*/
 

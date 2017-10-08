@@ -1,6 +1,5 @@
 #pragma once
 
-#include "VulkanLoader.h"
 #include <Array.h>
 
 class VulkanInstance

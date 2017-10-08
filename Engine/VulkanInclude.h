@@ -7,7 +7,7 @@
 #include <vulkan/vulkan.h>
 #undef CreateWindow
 
-vkGetProcAddress = (PFN_vkGetInstanceProcAddr)SDL_LoadFunction(SDL_LoadObject("vulkan-1.dll", "vkGetInstanceProcAddr"));
+PFN_vkGetInstanceProcAddr vkGetProcAddress = (PFN_vkGetInstanceProcAddr)SDL_LoadFunction(SDL_LoadObject("vulkan-1.dll"), "vkGetInstanceProcAddr");
 
 extern VkInstance gVulkanInstance;
 extern PFN_vkGetInstanceProcAddr vkGetProcAddress;

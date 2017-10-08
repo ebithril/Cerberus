@@ -1,11 +1,10 @@
 #include "SDLWindow.h"
 
 #include "VulkanInstance.h"
-#include "VulkanLoader.h"
 
 #include <stdio.h>
 
-void SDLWindow::CreateWindow(const WindowMode aWindowMode, const uint16 aWindowWidth, const uint16 aWindowHeight, VulkanInstance* Instance, VulkanLoader* Loader)
+void SDLWindow::CreateWindow(const WindowMode aWindowMode, const uint16 aWindowWidth, const uint16 aWindowHeight, VulkanInstance* Instance)
 {
 	uint32 WindowFlags = SDL_WINDOW_OPENGL;
 
@@ -40,7 +39,7 @@ void SDLWindow::CreateWindow(const WindowMode aWindowMode, const uint16 aWindowW
 	CreateInfo.hwnd = myWindowInfo.info.win.window;
 	CreateInfo.hinstance = GetModuleHandle(nullptr);
 
-	if (Loader->fpvkCreateWin32SurfaceKHR(Instance->VulkanInstance, &CreateInfo, nullptr, &VulkanSurface) != VK_SUCCESS)
+	if (fpvkCreateWin32SurfaceKHR(Instance->VulkanInstance, &CreateInfo, nullptr, &VulkanSurface) != VK_SUCCESS)
 	{
 		printf("Failed to create surface \n");
 	}

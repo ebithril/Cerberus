@@ -10,12 +10,11 @@
 #undef CreateWindow
 
 class VulkanInstance;
-class VulkanLoader;
 
 class SDLWindow
 {
 public:
-	void CreateWindow(const WindowMode aWindowMode, const uint16 aWindowWidth, const uint16 aWindowHeight, VulkanInstance* Instance, VulkanLoader* Loader);
+	void CreateWindow(const WindowMode aWindowMode, const uint16 aWindowWidth, const uint16 aWindowHeight, VulkanInstance* Instance);
 	void Close();
 
 	VkSurfaceKHR GetSurface() { return VulkanSurface; }	
@@ -26,3 +25,4 @@ private:
 
 	VkSurfaceKHR VulkanSurface;
 };
+

@@ -2,6 +2,7 @@
 
 #include "Asset.h"
 #include <Array.h>
+#include <UString.h>
 
 class BaseAssetPtr
 {
@@ -10,13 +11,22 @@ private:
 	String AssetPath;
 };
 
+class AssetManager
+{
+public:
+	static Asset* Load(BaseAssetPtr* AssetPtr);
+
+private:
+	Array<Asset*> Assets;	
+};
+
 template<typename AssetType>
 class AssetPtr : public BaseAssetPtr
 {
 public:
 	AssetType* Get() 
 	{
-		if (AssetType)
+		if (Asset)
 		{
 			return Asset;
 		}
@@ -33,14 +43,5 @@ public:
 
 private:
 	AssetType* Asset;
-};
-
-class AssetManager
-{
-public:
-	static Asset* Load(BaseAssetPtr* AssetPtr);
-
-private:
-	Array<Asset*> Assets;	
 };
 
