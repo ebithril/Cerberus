@@ -1,7 +1,6 @@
 #include "VulkanInstance.h"
 
 #include "EngineStructs.h"
-#include "VulkanLoader.h"
 
 #include <stdio.h>
 
@@ -17,9 +16,9 @@ void VulkanInstance::Create()
 
 void VulkanInstance::LoadBaseFunctions()
 {
-	LOAD_VULKAN_FUNCTION(vkCreateInstance);
-	LOAD_VULKAN_FUNCTION(vkEnumerateInstanceLayerProperties);
-	LOAD_VULKAN_FUNCTION(vkEnumerateInstanceExtensionProperties);
+	LOAD_VK_FUNCTION(vkCreateInstance);
+	LOAD_VK_FUNCTION(vkEnumerateInstanceLayerProperties);
+	LOAD_VK_FUNCTION(vkEnumerateInstanceExtensionProperties);
 }
 
 void VulkanInstance::CreateInstance()
@@ -45,7 +44,7 @@ void VulkanInstance::CreateInstance()
 
     createInfo.enabledLayerCount = 0;
 
-    VkResult result = fpvkCreateInstance(&createInfo, nullptr, &gVulkanInstance);
+    VkResult result = vkCreateInstance(&createInfo, nullptr, &gVulkanInstance);
 
 	if (result != VK_SUCCESS)
 	{
@@ -61,10 +60,10 @@ void VulkanInstance::CheckValidationLayerSupport()
 	}
 
 	uint32 LayerCount;
-	fpvkEnumerateInstanceLayerProperties(&LayerCount, NULL);
+	vkEnumerateInstanceLayerProperties(&LayerCount, NULL);
 
 	AvailableValidationLayers.InitEmpty(LayerCount);
-	fpvkEnumerateInstanceLayerProperties(&LayerCount, AvailableValidationLayers.Data());
+	vkEnumerateInstanceLayerProperties(&LayerCount, AvailableValidationLayers.Data());
 
 	for (VkLayerProperties& Layer : AvailableValidationLayers)
 	{

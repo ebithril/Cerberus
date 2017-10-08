@@ -1,5 +1,6 @@
 #pragma once
 
+#include "VulkanInclude.h"
 #include <Array.h>
 
 class VulkanInstance

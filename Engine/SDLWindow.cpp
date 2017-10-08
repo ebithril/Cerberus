@@ -39,7 +39,7 @@ void SDLWindow::CreateWindow(const WindowMode aWindowMode, const uint16 aWindowW
 	CreateInfo.hwnd = myWindowInfo.info.win.window;
 	CreateInfo.hinstance = GetModuleHandle(nullptr);
 
-	if (fpvkCreateWin32SurfaceKHR(Instance->VulkanInstance, &CreateInfo, nullptr, &VulkanSurface) != VK_SUCCESS)
+	if (vkCreateWin32SurfaceKHR(gVulkanInstance, &CreateInfo, nullptr, &VulkanSurface) != VK_SUCCESS)
 	{
 		printf("Failed to create surface \n");
 	}

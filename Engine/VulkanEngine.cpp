@@ -4,13 +4,15 @@
 #include <Logging.h>
 
 #include "Window.h"
+#include "VulkanInclude.h"
 #include "VulkanInstance.h"
-#include "VulkanLoader.h"
 #include "VulkanDevice.h"
 
 void VulkanEngine::InitVulkan(const EngineStartupOptions& StartUpOptions)
 {
-	vkGetProcAddress = (PFN_vkGetInstanceProcAddr)SDL_LoadFunction(SDL_LoadObject("vulkan-1.dll"), "vkGetInstanceProcAddr");
+	vkGetProcAddress = (PFN_vkGetInstanceProcAddr)SDL_LoadFunction(
+		SDL_LoadObject("vulkan-1.dll"), 
+		"vkGetInstanceProcAddr");
 
 	myInstance = new VulkanInstance();
 	if (ensure(myInstance))
@@ -18,7 +20,7 @@ void VulkanEngine::InitVulkan(const EngineStartupOptions& StartUpOptions)
 		myInstance->Create();
 	}
 
-	if (!ensure(LoadFunctions())
+	if (!ensure(LoadFunctions()))
 	{
 		return;
 	}
@@ -26,13 +28,17 @@ void VulkanEngine::InitVulkan(const EngineStartupOptions& StartUpOptions)
 	myWindow = new Window();
 	if (ensure(myWindow))
 	{
-		myWindow->CreateWindow(StartUpOptions.myWindowMode, StartUpOptions.myWindowWidth, StartUpOptions.myWindowHeight, myInstance, myLoader);
+		myWindow->CreateWindow(
+			StartUpOptions.myWindowMode, 
+			StartUpOptions.myWindowWidth, 
+			StartUpOptions.myWindowHeight, 
+			myInstance);
 	}
 
 	myDevice = new VulkanDevice();
 	if (myDevice)
 	{
-		myDevice->Init(myInstance, myLoader, myWindow->GetSDLWindow());
+		myDevice->Init(myWindow->GetSDLWindow());
 	}
 }
 
@@ -67,11 +73,6 @@ void VulkanEngine::Shutdown()
 	if (myInstance)
 	{
 		delete myInstance;
-	}
-
-	if (myLoader)
-	{
-		delete myLoader;
 	}
 
 	if (myWindow)

@@ -1,7 +1,5 @@
 #pragma once
 
-class VulkanInstance;
-class VulkanLoader;
 class SDLWindow;
 
 #include <Array.h>
@@ -28,7 +26,7 @@ struct SwapChainSupportDetails
 class VulkanDevice
 {
 public:
-	void Init(VulkanInstance* Instance, VulkanLoader* Loader, SDLWindow& Window);
+	void Init(SDLWindow& Window);
 
 private:
 	void GetDevices(Array<VkPhysicalDevice>& Devices);
@@ -43,9 +41,6 @@ private:
 	VkExtent2D ChooseSwapExtent(const VkSurfaceCapabilitiesKHR& Capabilities);
 
 	QueueFamilyIndices FindQueueFamilies(VkPhysicalDevice Device);
-
-	VulkanInstance* myInstance;
-	VulkanLoader* myLoader;
 
 	VkPhysicalDevice myPhysicalDevice;
 	VkPhysicalDeviceProperties myDeviceProperties;

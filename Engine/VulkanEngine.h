@@ -1,7 +1,6 @@
 #pragma once
 
 class VulkanInstance;
-class VulkanLoader;
 class VulkanDevice;
 class Window;
 
@@ -17,7 +16,6 @@ private:
 	bool LoadFunctions();
 
 	VulkanInstance* myInstance;
-	VulkanLoader* myLoader;
 	VulkanDevice* myDevice;
 
 	Window* myWindow;

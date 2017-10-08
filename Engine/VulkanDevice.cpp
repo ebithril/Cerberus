@@ -1,16 +1,11 @@
 #include "VulkanDevice.h"
 
 #include "SDLWindow.h"
-#include "VulkanLoader.h"
-#include "VulkanInstance.h"
 
 #include <stdio.h>
 
-void VulkanDevice::Init(VulkanInstance* Instance, VulkanLoader* Loader, SDLWindow& Window)
+void VulkanDevice::Init(SDLWindow& Window)
 {
-	myInstance = Instance;
-	myLoader = Loader;
-
 	mySurface = Window.GetSurface();
 
 	Array<VkPhysicalDevice> Devices;
@@ -25,11 +20,11 @@ void VulkanDevice::Init(VulkanInstance* Instance, VulkanLoader* Loader, SDLWindo
 void VulkanDevice::GetDevices(Array<VkPhysicalDevice>& Devices)
 {
 	uint32 NumberOfDevices;
-	myLoader->fpvkEnumeratePhysicalDevices(myInstance->VulkanInstance, &NumberOfDevices, NULL);
+	vkEnumeratePhysicalDevices(gVulkanInstance, &NumberOfDevices, NULL);
 	printf("Found %d number of devices!\n", NumberOfDevices);
 
 	Devices.InitEmpty(NumberOfDevices);
-	myLoader->fpvkEnumeratePhysicalDevices(myInstance->VulkanInstance, &NumberOfDevices, Devices.Data());
+	vkEnumeratePhysicalDevices(gVulkanInstance, &NumberOfDevices, Devices.Data());
 }
 
 void VulkanDevice::ChooseSuitableDevice(Array<VkPhysicalDevice>& Devices)
@@ -49,8 +44,8 @@ void VulkanDevice::ChooseSuitableDevice(Array<VkPhysicalDevice>& Devices)
 
 bool VulkanDevice::IsDeviceSuitable(VkPhysicalDevice Device, VkPhysicalDeviceProperties& DeviceProperties, VkPhysicalDeviceFeatures& DeviceFeatures)
 {
-    myLoader->fpvkGetPhysicalDeviceProperties(Device, &DeviceProperties);
-    myLoader->fpvkGetPhysicalDeviceFeatures(Device, &DeviceFeatures);
+    vkGetPhysicalDeviceProperties(Device, &DeviceProperties);
+    vkGetPhysicalDeviceFeatures(Device, &DeviceFeatures);
 
     if (DeviceProperties.deviceType == VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU && DeviceFeatures.geometryShader)
     {
@@ -67,17 +62,17 @@ QueueFamilyIndices VulkanDevice::FindQueueFamilies(VkPhysicalDevice Device)
 	QueueFamilyIndices Indices;
 
 	uint32 QueueFamilyCount = 0;
-	myLoader->fpvkGetPhysicalDeviceQueueFamilyProperties(Device, &QueueFamilyCount, nullptr);
+	vkGetPhysicalDeviceQueueFamilyProperties(Device, &QueueFamilyCount, nullptr);
 
 	Array<VkQueueFamilyProperties> QueueFamilies;
 	QueueFamilies.InitEmpty(QueueFamilyCount);
-	myLoader->fpvkGetPhysicalDeviceQueueFamilyProperties(Device, &QueueFamilyCount, QueueFamilies.Data());
+	vkGetPhysicalDeviceQueueFamilyProperties(Device, &QueueFamilyCount, QueueFamilies.Data());
 
 	int i = 0;
 	for (const auto& QueueFamily : QueueFamilies)
 	{
 		VkBool32 PresentSupport = false;
-		myLoader->fpvkGetPhysicalDeviceSurfaceSupportKHR(Device, i, mySurface, &PresentSupport);
+		vkGetPhysicalDeviceSurfaceSupportKHR(Device, i, mySurface, &PresentSupport);
 
 		if (QueueFamily.queueCount > 0 && QueueFamily.queueFlags & VK_QUEUE_GRAPHICS_BIT && PresentSupport) 
 		{
@@ -115,24 +110,24 @@ void VulkanDevice::CreateDevice()
 	CreateInfo.enabledExtensionCount = DeviceExtensions.Num();
 	CreateInfo.ppEnabledExtensionNames = DeviceExtensions.Data();
 
-	VkResult result = myLoader->fpvkCreateDevice(myPhysicalDevice, &CreateInfo, NULL, &myDevice);
+	VkResult result = vkCreateDevice(myPhysicalDevice, &CreateInfo, NULL, &myDevice);
 	if (result != VK_SUCCESS)
 	{
 		printf("Failed to create device");
 		return;
 	}
 
-	myLoader->fpvkGetDeviceQueue(myDevice, FamilyIndicies.GraphicsFamily, 0, &myGraphicsQueue);
+	vkGetDeviceQueue(myDevice, FamilyIndicies.GraphicsFamily, 0, &myGraphicsQueue);
 }
 
 void VulkanDevice::SetupSwapChain()
 {
 	SwapChainSupportDetails Details;
 
-	myLoader->fpvkGetPhysicalDeviceSurfaceCapabilitiesKHR(myPhysicalDevice, mySurface, &Details.Capabilities);
+	vkGetPhysicalDeviceSurfaceCapabilitiesKHR(myPhysicalDevice, mySurface, &Details.Capabilities);
 
 	uint32 FormatCount;
-	myLoader->fpvkGetPhysicalDeviceSurfaceFormatsKHR(myPhysicalDevice, mySurface, &FormatCount, NULL);
+	vkGetPhysicalDeviceSurfaceFormatsKHR(myPhysicalDevice, mySurface, &FormatCount, NULL);
 
 	if (FormatCount	<= 0)
 	{
@@ -141,10 +136,10 @@ void VulkanDevice::SetupSwapChain()
 	}
 
 	Details.Formats.InitEmpty(FormatCount);
-	myLoader->fpvkGetPhysicalDeviceSurfaceFormatsKHR(myPhysicalDevice, mySurface, &FormatCount, Details.Formats.Data());
+	vkGetPhysicalDeviceSurfaceFormatsKHR(myPhysicalDevice, mySurface, &FormatCount, Details.Formats.Data());
 
 	uint32 PresentModeCount;
-	myLoader->fpvkGetPhysicalDeviceSurfacePresentModesKHR(myPhysicalDevice, mySurface, &PresentModeCount, NULL);
+	vkGetPhysicalDeviceSurfacePresentModesKHR(myPhysicalDevice, mySurface, &PresentModeCount, NULL);
 
 	if (PresentModeCount <= 0)
 	{
@@ -153,7 +148,7 @@ void VulkanDevice::SetupSwapChain()
 	}
 
 	Details.PresentModes.InitEmpty(PresentModeCount);
-	myLoader->fpvkGetPhysicalDeviceSurfacePresentModesKHR(myPhysicalDevice, mySurface, &PresentModeCount, Details.PresentModes.Data());
+	vkGetPhysicalDeviceSurfacePresentModesKHR(myPhysicalDevice, mySurface, &PresentModeCount, Details.PresentModes.Data());
 
 	mySurfaceFormat = ChooseSwapSurfaceFormat(Details.Formats);
 	mySurfacePresentMode = ChooseSwapPresentMode(Details.PresentModes);
@@ -183,15 +178,15 @@ void VulkanDevice::SetupSwapChain()
 	CreateInfo.clipped = VK_TRUE;
 	CreateInfo.oldSwapchain = VK_NULL_HANDLE;
 
-	if (myLoader->fpvkCreateSwapchainKHR(myDevice, &CreateInfo, NULL, &mySwapChain) != VK_SUCCESS)
+	if (vkCreateSwapchainKHR(myDevice, &CreateInfo, NULL, &mySwapChain) != VK_SUCCESS)
 	{
 		printf("Failed to create swap chain.\n");
 		return;
 	}
 
-	myLoader->fpvkGetSwapchainImagesKHR(myDevice, mySwapChain, &ImageCount, NULL);
+	vkGetSwapchainImagesKHR(myDevice, mySwapChain, &ImageCount, NULL);
 	mySwapChainImages.InitEmpty(ImageCount);
-	myLoader->fpvkGetSwapchainImagesKHR(myDevice, mySwapChain, &ImageCount, mySwapChainImages.Data());
+	vkGetSwapchainImagesKHR(myDevice, mySwapChain, &ImageCount, mySwapChainImages.Data());
 }
 
 VkSurfaceFormatKHR VulkanDevice::ChooseSwapSurfaceFormat(const Array<VkSurfaceFormatKHR>& AvailableFormats)
@@ -258,7 +253,7 @@ void VulkanDevice::SetupSwapChainImageViews()
 		CreateInfo.subresourceRange.baseArrayLayer = 0;
 		CreateInfo.subresourceRange.layerCount = 1;
 
-		if (myLoader->fpvkCreateImageView(myDevice, &CreateInfo, NULL, &mySwapChainImageViews[i]) != VK_SUCCESS)
+		if (vkCreateImageView(myDevice, &CreateInfo, NULL, &mySwapChainImageViews[i]) != VK_SUCCESS)
 		{
 			printf("Failed to create image view for swap chain");
 			return;

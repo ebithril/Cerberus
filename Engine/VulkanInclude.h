@@ -5,33 +5,34 @@
 #define VK_NO_PROTOTYPES
 
 #include <vulkan/vulkan.h>
+#include <SDL2/SDL.h>
 #undef CreateWindow
 
-PFN_vkGetInstanceProcAddr vkGetProcAddress = (PFN_vkGetInstanceProcAddr)SDL_LoadFunction(SDL_LoadObject("vulkan-1.dll"), "vkGetInstanceProcAddr");
-
-extern VkInstance gVulkanInstance;
 extern PFN_vkGetInstanceProcAddr vkGetProcAddress;
+extern VkInstance gVulkanInstance;
 
-#define DEFINE_VK_FUNCTION(FunctionName) PFN_##FunctionName FunctionName
+#define EXTERN_DEFINE_VK_FUNCTION(FunctionName) extern PFN_##FunctionName FunctionName
 #define LOAD_VK_FUNCTION(FunctionName) FunctionName = (PFN_##FunctionName)vkGetProcAddress(gVulkanInstance, #FunctionName)
 
-DEFINE_VK_FUNCTION(vkCreateInstance);
-DEFINE_VK_FUNCTION(vkEnumerateInstanceLayerProperties);
-DEFINE_VK_FUNCTION(vkEnumerateInstanceExtensionProperties);
+// Functions that doesn't need a VulkanInstance to load
+EXTERN_DEFINE_VK_FUNCTION(vkCreateInstance);
+EXTERN_DEFINE_VK_FUNCTION(vkEnumerateInstanceLayerProperties);
+EXTERN_DEFINE_VK_FUNCTION(vkEnumerateInstanceExtensionProperties);
 
-DEFINE_VK_FUNCTION(vkEnumeratePhysicalDevices);
-DEFINE_VK_FUNCTION(vkGetPhysicalDeviceProperties);
-DEFINE_VK_FUNCTION(vkGetPhysicalDeviceFeatures);
-DEFINE_VK_FUNCTION(vkGetPhysicalDeviceQueueFamilyProperties);
-DEFINE_VK_FUNCTION(vkCreateDevice);
-DEFINE_VK_FUNCTION(vkGetDeviceQueue);
-DEFINE_VK_FUNCTION(vkGetPhysicalDeviceSurfaceSupportKHR);
-DEFINE_VK_FUNCTION(vkGetPhysicalDeviceSurfaceCapabilitiesKHR);
-DEFINE_VK_FUNCTION(vkGetPhysicalDeviceSurfaceFormatsKHR);
-DEFINE_VK_FUNCTION(vkGetPhysicalDeviceSurfacePresentModesKHR);
-DEFINE_VK_FUNCTION(vkCreateSwapchainKHR);
-DEFINE_VK_FUNCTION(vkGetSwapchainImagesKHR);
-DEFINE_VK_FUNCTION(vkCreateImageView);
-DEFINE_VK_FUNCTION(vkCreateWin32SurfaceKHR);
-DEFINE_VK_FUNCTION(vkCreateShaderModule);
+// Functions that need VulkanInstance or Device to be inited
+EXTERN_DEFINE_VK_FUNCTION(vkEnumeratePhysicalDevices);
+EXTERN_DEFINE_VK_FUNCTION(vkGetPhysicalDeviceProperties);
+EXTERN_DEFINE_VK_FUNCTION(vkGetPhysicalDeviceFeatures);
+EXTERN_DEFINE_VK_FUNCTION(vkGetPhysicalDeviceQueueFamilyProperties);
+EXTERN_DEFINE_VK_FUNCTION(vkCreateDevice);
+EXTERN_DEFINE_VK_FUNCTION(vkGetDeviceQueue);
+EXTERN_DEFINE_VK_FUNCTION(vkGetPhysicalDeviceSurfaceSupportKHR);
+EXTERN_DEFINE_VK_FUNCTION(vkGetPhysicalDeviceSurfaceCapabilitiesKHR);
+EXTERN_DEFINE_VK_FUNCTION(vkGetPhysicalDeviceSurfaceFormatsKHR);
+EXTERN_DEFINE_VK_FUNCTION(vkGetPhysicalDeviceSurfacePresentModesKHR);
+EXTERN_DEFINE_VK_FUNCTION(vkCreateSwapchainKHR);
+EXTERN_DEFINE_VK_FUNCTION(vkGetSwapchainImagesKHR);
+EXTERN_DEFINE_VK_FUNCTION(vkCreateImageView);
+EXTERN_DEFINE_VK_FUNCTION(vkCreateWin32SurfaceKHR);
+EXTERN_DEFINE_VK_FUNCTION(vkCreateShaderModule);
 
