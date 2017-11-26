@@ -2,7 +2,7 @@
 
 class VulkanInstance;
 class VulkanDevice;
-class Window;
+class CerberusWindow;
 
 struct EngineStartupOptions;
 
@@ -18,6 +18,6 @@ private:
 	VulkanInstance* myInstance;
 	VulkanDevice* myDevice;
 
-	Window* myWindow;
+	CerberusWindow* myWindow;
 };
 

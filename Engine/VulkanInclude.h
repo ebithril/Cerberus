@@ -1,7 +1,9 @@
 #pragma once
 
 // Set defines for Vulkan loading
+#ifdef WIN32
 #define VK_USE_PLATFORM_WIN32_KHR
+#endif //WIN32
 #define VK_NO_PROTOTYPES
 
 #include <vulkan/vulkan.h>
@@ -33,6 +35,9 @@ EXTERN_DEFINE_VK_FUNCTION(vkGetPhysicalDeviceSurfacePresentModesKHR);
 EXTERN_DEFINE_VK_FUNCTION(vkCreateSwapchainKHR);
 EXTERN_DEFINE_VK_FUNCTION(vkGetSwapchainImagesKHR);
 EXTERN_DEFINE_VK_FUNCTION(vkCreateImageView);
-EXTERN_DEFINE_VK_FUNCTION(vkCreateWin32SurfaceKHR);
 EXTERN_DEFINE_VK_FUNCTION(vkCreateShaderModule);
+
+#ifdef WIN32
+EXTERN_DEFINE_VK_FUNCTION(vkCreateWin32SurfaceKHR);
+#endif //WIN32
 

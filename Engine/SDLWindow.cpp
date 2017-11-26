@@ -34,6 +34,7 @@ void SDLWindow::CreateWindow(const WindowMode aWindowMode, const uint16 aWindowW
 		printf("Something went wrong when getting window info\n");
 	}
 
+#ifdef WIN32
 	VkWin32SurfaceCreateInfoKHR CreateInfo = {};
 	CreateInfo.sType = VK_STRUCTURE_TYPE_WIN32_SURFACE_CREATE_INFO_KHR;
 	CreateInfo.hwnd = myWindowInfo.info.win.window;
@@ -43,6 +44,7 @@ void SDLWindow::CreateWindow(const WindowMode aWindowMode, const uint16 aWindowW
 	{
 		printf("Failed to create surface \n");
 	}
+#endif //WIN32
 }
 
 void SDLWindow::Close()

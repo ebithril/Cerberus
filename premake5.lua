@@ -14,6 +14,12 @@ project "Cerberus"
 	libdirs { "$(VK_SDK_PATH)/Lib" }
 	links { "Engine", "Utils", "SDL2", "SDL2main" }
 
+	if os.target() == "windows" then
+		defines { "WIN32" }
+	elseif os.target() == linux then
+		defines { "LINUX" }
+	end
+
 	filter "configurations:Debug"
 		defines { "DEBUG" }
 		symbols "On"

@@ -7,6 +7,7 @@
 #include "VulkanInclude.h"
 #include "VulkanInstance.h"
 #include "VulkanDevice.h"
+#include "AssetManager.h"
 
 void VulkanEngine::InitVulkan(const EngineStartupOptions& StartUpOptions)
 {
@@ -25,7 +26,7 @@ void VulkanEngine::InitVulkan(const EngineStartupOptions& StartUpOptions)
 		return;
 	}
 
-	myWindow = new Window();
+	myWindow = new CerberusWindow();
 	if (ensure(myWindow))
 	{
 		myWindow->CreateWindow(
@@ -40,14 +41,14 @@ void VulkanEngine::InitVulkan(const EngineStartupOptions& StartUpOptions)
 	{
 		myDevice->Init(myWindow->GetSDLWindow());
 	}
+
+	AssetManager::LoadAssets();
 }
 
 bool VulkanEngine::LoadFunctions()
 {
 	if (!gVulkanInstance)
-	{
 		return false;
-	}
 
 	LOAD_VK_FUNCTION(vkEnumeratePhysicalDevices);
 	LOAD_VK_FUNCTION(vkGetPhysicalDeviceProperties);
@@ -62,9 +63,12 @@ bool VulkanEngine::LoadFunctions()
 	LOAD_VK_FUNCTION(vkCreateSwapchainKHR);
 	LOAD_VK_FUNCTION(vkGetSwapchainImagesKHR);
 	LOAD_VK_FUNCTION(vkCreateImageView);
-	LOAD_VK_FUNCTION(vkCreateWin32SurfaceKHR);
 	LOAD_VK_FUNCTION(vkCreateShaderModule);
 	
+#ifdef WIN32
+	LOAD_VK_FUNCTION(vkCreateWin32SurfaceKHR);
+#endif //WIN32
+
 	return true;
 }
 

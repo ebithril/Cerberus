@@ -60,3 +60,4 @@ private:
 	VkPresentModeKHR mySurfacePresentMode;
 	VkExtent2D mySwapExtent;
 };
+

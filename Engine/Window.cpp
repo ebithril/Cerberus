@@ -2,7 +2,11 @@
 
 #include "SDLWindow.h"
 
-void Window::CreateWindow(const WindowMode aWindowMode, const uint16 aWindowWidth, const uint16 aWindowHeight, VulkanInstance* Instance)
+void CerberusWindow::CreateWindow(
+		const WindowMode aWindowMode, 
+		const uint16 aWindowWidth, 
+		const uint16 aWindowHeight, 
+		VulkanInstance* Instance)
 {
 	if (myWindow)
 	{
@@ -16,7 +20,7 @@ void Window::CreateWindow(const WindowMode aWindowMode, const uint16 aWindowWidt
 	}
 }
 
-void Window::Close()
+void CerberusWindow::Close()
 {
 	if (myWindow)
 	{

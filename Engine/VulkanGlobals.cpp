@@ -22,6 +22,9 @@ DEFINE_VK_FUNCTION(vkGetPhysicalDeviceSurfacePresentModesKHR);
 DEFINE_VK_FUNCTION(vkCreateSwapchainKHR);
 DEFINE_VK_FUNCTION(vkGetSwapchainImagesKHR);
 DEFINE_VK_FUNCTION(vkCreateImageView);
-DEFINE_VK_FUNCTION(vkCreateWin32SurfaceKHR);
 DEFINE_VK_FUNCTION(vkCreateShaderModule);
+
+#ifdef WIN32
+DEFINE_VK_FUNCTION(vkCreateWin32SurfaceKHR);
+#endif //WIN32
 

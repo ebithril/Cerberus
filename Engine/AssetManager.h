@@ -1,47 +1,20 @@
 #pragma once
 
-#include "Asset.h"
 #include <Array.h>
-#include <UString.h>
 
-class BaseAssetPtr
-{
-private:
-	String AssetName;
-	String AssetPath;
-};
+class VulkanFragmentShader;
+class VulkanVertexShader;
+class String;
 
 class AssetManager
 {
 public:
-	static Asset* Load(BaseAssetPtr* AssetPtr);
+	static void LoadAssets();
+	static void FindFiles(const String& DirectoryName);
 
 private:
-	Array<Asset*> Assets;	
-};
+	static void LoadFragmentShader(VulkanFragmentShader& Shader, const String& Path);
+	static void LoadVertexShader(VulkanVertexShader& Shader, const String& Path);
 
-template<typename AssetType>
-class AssetPtr : public BaseAssetPtr
-{
-public:
-	AssetType* Get() 
-	{
-		if (Asset)
-		{
-			return Asset;
-		}
-		
-		Load();
-
-		return Asset;
-	}
-
-	void Load()
-	{
-		Asset = dynamic_cast<AssetType>(AssetManager::Load(this));
-	}
-
-private:
-	AssetType* Asset;
 };
 
