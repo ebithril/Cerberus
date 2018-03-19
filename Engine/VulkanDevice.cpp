@@ -260,3 +260,4 @@ void VulkanDevice::SetupSwapChainImageViews()
 		}
 	}
 }
+

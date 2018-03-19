@@ -16,3 +16,4 @@ struct EngineStartupOptions
 	uint16 myWindowHeight;
 	uint16 myWindowWidth;
 };
+
