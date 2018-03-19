@@ -18,8 +18,9 @@ public:
 
 	void Close();
 
-	SDLWindow& GetSDLWindow() { return *myWindow; }
+	inline SDLWindow& GetSDLWindow() { return *myWindow; }
 
 private:
 	SDLWindow* myWindow = nullptr;
 };
+

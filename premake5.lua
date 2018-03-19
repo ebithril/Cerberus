@@ -1,7 +1,7 @@
 workspace "Cerberus"
 	configurations { "Debug", "Release" }
 	filter "language:C++"
-		buildoptions "-std=c++11"
+		buildoptions { "-std=c++17", "-pedantic" }
 
 targetdir "bin/%{cfg.buildcfg}"
 
@@ -13,12 +13,6 @@ project "Cerberus"
 	includedirs { "Utils", "Engine" }
 	libdirs { "$(VK_SDK_PATH)/Lib" }
 	links { "Engine", "Utils", "SDL2", "SDL2main" }
-
-	if os.target() == "windows" then
-		defines { "WIN32" }
-	elseif os.target() == linux then
-		defines { "LINUX" }
-	end
 
 	filter "configurations:Debug"
 		defines { "DEBUG" }

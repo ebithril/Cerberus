@@ -28,3 +28,4 @@ void CerberusWindow::Close()
 		delete myWindow;
 	}
 }
+
